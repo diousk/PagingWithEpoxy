@@ -43,9 +43,15 @@ class MainDataSource(
     }
 
     override fun loadAfter(params: LoadParams<Long>, callback: LoadCallback<Long, Article>) {
-        Timber.d("loadAfter")
+        Timber.d("loadAfter, key = ${params.key}")
         networkState.postValue(NetworkState.LOADING)
-        networkState.postValue(NetworkState.error("error code"))
+        val disposable = appApi.fetchFeed(QUERY, API_KEY, params.key, params.requestedLoadSize)
+            .subscribe({
+                onPaginationSuccess(it, callback, params, it.articles)
+            }, {
+                onPaginationError(params, callback, it)
+            })
+        addDisposable(disposable)
     }
 
     fun retryFailed() {
@@ -84,10 +90,16 @@ class MainDataSource(
 
     override fun onPaginationSuccess(
         response: Feed,
-        callback: LoadCallback<Int, Article>,
-        params: LoadParams<Int>,
+        callback: LoadCallback<Long, Article>,
+        params: LoadParams<Long>,
         model: List<Article>
     ) {
+        Timber.d("onPaginationSuccess = $response, key = ${params.key}, thread = ${Thread.currentThread().name}")
+        retryAction = null
+        // test page 15 as end of data
+        val nextKey = if (15L == params.key) null else params.key+1
+        callback.onResult(response.articles, nextKey)
+        networkState.postValue(NetworkState.LOADED)
     }
 
     override fun onPaginationError(
@@ -95,7 +107,12 @@ class MainDataSource(
         callback: LoadCallback<Long, Article>,
         throwable: Throwable
     ) {
-
+        Timber.e("onPaginationError = $throwable, thread = ${Thread.currentThread().name}")
+        retryAction = Action {
+            Timber.d("retry initial")
+            loadAfter(params, callback)
+        }
+        networkState.postValue(NetworkState.error(throwable.message))
     }
 
     override fun addDisposable(disposable: Disposable) {

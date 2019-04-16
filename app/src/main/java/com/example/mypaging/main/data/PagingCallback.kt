@@ -37,8 +37,8 @@ interface PagingCallback<Response, Result> {
      */
     fun onPaginationSuccess(
         response: Response,
-        callback: PageKeyedDataSource.LoadCallback<Int, Result>,
-        params: PageKeyedDataSource.LoadParams<Int>,
+        callback: PageKeyedDataSource.LoadCallback<Long, Result>,
+        params: PageKeyedDataSource.LoadParams<Long>,
         model: List<Result>
     )
 
