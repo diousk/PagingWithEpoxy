@@ -7,7 +7,7 @@ import com.example.mypaging.model.Article
 class ArticleHolder(
     private val binding: ItemFeedBinding
 ): RecyclerView.ViewHolder(binding.rootView) {
-    fun bind(article: Article) {
-        binding.title.text = article.title
+    fun bind(article: Article?) {
+        binding.title.text = article?.title
     }
 }

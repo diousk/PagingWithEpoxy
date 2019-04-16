@@ -28,8 +28,11 @@ class MainDataSource(
 
     override fun loadInitial(params: LoadInitialParams<Long>, callback: LoadInitialCallback<Long, Article>) {
         Timber.d("loadInitial")
-        networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)
+
+        // don't show footer loading when start load initial
+        networkState.postValue(null)
+
         val disposable = appApi.fetchFeed(QUERY, API_KEY, 1, params.requestedLoadSize)
             .subscribe({
                 onInitialSuccess(it, callback, it.articles)
@@ -41,6 +44,8 @@ class MainDataSource(
 
     override fun loadAfter(params: LoadParams<Long>, callback: LoadCallback<Long, Article>) {
         Timber.d("loadAfter")
+        networkState.postValue(NetworkState.LOADING)
+        networkState.postValue(NetworkState.error("error code"))
     }
 
     fun retryFailed() {

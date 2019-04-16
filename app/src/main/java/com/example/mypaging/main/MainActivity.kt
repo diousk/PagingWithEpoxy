@@ -1,7 +1,6 @@
 package com.example.mypaging.main
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,13 +24,18 @@ class MainActivity : DaggerAppCompatActivity(), MainView {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
         binding.viewModel = viewModel
         binding.rvPosts.layoutManager = LinearLayoutManager(this)
-        binding.rvPosts.adapter = ArticalAdapter { viewModel.retry() }
+        binding.rvPosts.adapter = ArticleAdapter { viewModel.retry() }
         Timber.d("MainActivity onCreate")
         viewModel.articleLivedata.observe(this, Observer {
             Timber.d("observe list, size = ${it.size}")
-            (binding.rvPosts.adapter as ArticalAdapter).submitList(it)
+            (binding.rvPosts.adapter as ArticleAdapter).submitList(it)
+        })
+        viewModel.networkState.observe(this, Observer {
+            Timber.d("observe networkState, it = $it")
+            (binding.rvPosts.adapter as ArticleAdapter).setNetworkState(it)
         })
         viewModel.refreshState.observe(this, Observer {
+            Timber.d("observe refreshState, it = $it")
             binding.swipeRefresh.isRefreshing = (it == NetworkState.LOADING)
         })
 
