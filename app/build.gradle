@@ -52,6 +52,7 @@ ext.timber_version = '4.7.1'
 ext.socket_version = '1.0.0'
 ext.epoxy_version = '3.1.0'
 ext.work_version = '2.0.0'
+ext.paging_version = "2.1.0"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -89,4 +90,14 @@ dependencies {
 
     // Logger
     implementation "com.jakewharton.timber:timber:$timber_version"
+
+    // Paging
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    testImplementation "androidx.paging:paging-common-ktx:$paging_version"
+
+    // Rx
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    implementation "com.jakewharton.rxrelay2:rxrelay:$rxrelay_version"
+    implementation "com.github.akarnokd:rxjava2-extensions:$rxext_version"
 }

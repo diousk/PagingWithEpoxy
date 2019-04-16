@@ -7,6 +7,7 @@ import com.example.mypaging.App
 import com.example.mypaging.api.AppApi
 import dagger.Module
 import dagger.Provides
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -32,7 +33,7 @@ class AppModule {
 
         val retrofit = Retrofit.Builder().baseUrl("https://newsapi.org")
             .addConverterFactory(MoshiConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .client(httpClient.build())
             .build()
         return retrofit.create(AppApi::class.java)
