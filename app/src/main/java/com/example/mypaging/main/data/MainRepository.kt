@@ -2,9 +2,11 @@ package com.example.mypaging.main.data
 
 import androidx.lifecycle.Transformations.switchMap
 import androidx.paging.Config
+import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.example.mypaging.api.AppApi
 import com.example.mypaging.model.Article
+import timber.log.Timber
 
 interface MainRepository {
     fun postsOfArticle(pageSize: Int): Listing<Article>
@@ -20,7 +22,20 @@ class MainRepositoryImpl(
             config = Config(
                 pageSize = pageSize,
                 enablePlaceholders = false,
-                initialLoadSizeHint = pageSize * 2)
+                initialLoadSizeHint = pageSize * 2),
+            boundaryCallback = object : PagedList.BoundaryCallback<Article>() {
+                override fun onZeroItemsLoaded() {
+                    Timber.d("onZeroItemsLoaded")
+                }
+
+                override fun onItemAtEndLoaded(itemAtEnd: Article) {
+                    Timber.d("onItemAtEndLoaded")
+                }
+
+                override fun onItemAtFrontLoaded(itemAtFront: Article) {
+                    Timber.d("onItemAtFrontLoaded")
+                }
+            }
         )
 
         val refreshState = switchMap(sourceFactory.sourceLiveData) {

@@ -22,10 +22,10 @@ class ArticleAdapter(
         return when (viewType) {
             R.layout.item_feed -> {
                 val binding = ItemFeedBinding.inflate(layoutInflater, parent, false)
-                ArticleHolder(binding)
+                ArticleViewHolder(binding)
             }
             R.layout.network_state_item -> {
-                NetworkStateHolder(layoutInflater.inflate(R.layout.network_state_item, parent, false), retryCallback)
+                NetworkStateViewHolder(layoutInflater.inflate(R.layout.network_state_item, parent, false), retryCallback)
             }
             else -> throw IllegalArgumentException("unknown view type $viewType")
         }
@@ -33,8 +33,8 @@ class ArticleAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)) {
-            R.layout.item_feed -> (holder as ArticleHolder).bind(getItem(position))
-            R.layout.network_state_item -> (holder as NetworkStateHolder).bind(networkState)
+            R.layout.item_feed -> (holder as ArticleViewHolder).bind(getItem(position))
+            R.layout.network_state_item -> (holder as NetworkStateViewHolder).bind(networkState)
         }
     }
 

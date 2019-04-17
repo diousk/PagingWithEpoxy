@@ -95,6 +95,12 @@ dependencies {
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
     testImplementation "androidx.paging:paging-common-ktx:$paging_version"
 
+    // Epoxy - for RecyclerView
+    implementation "com.airbnb.android:epoxy:$epoxy_version"
+    implementation "com.airbnb.android:epoxy-databinding:$epoxy_version"
+    implementation "com.airbnb.android:epoxy-paging:$epoxy_version"
+    kapt "com.airbnb.android:epoxy-processor:$epoxy_version"
+
     // Rx
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"

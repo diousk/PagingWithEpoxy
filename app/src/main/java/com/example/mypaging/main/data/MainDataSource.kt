@@ -109,7 +109,7 @@ class MainDataSource(
     ) {
         Timber.e("onPaginationError = $throwable, thread = ${Thread.currentThread().name}")
         retryAction = Action {
-            Timber.d("retry initial")
+            Timber.d("retry page = ${params.key}")
             loadAfter(params, callback)
         }
         networkState.postValue(NetworkState.error(throwable.message))

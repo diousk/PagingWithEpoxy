@@ -4,29 +4,34 @@ import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.epoxy.EpoxyAttribute
+import com.airbnb.epoxy.EpoxyModelClass
+import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.example.mypaging.R
 import com.example.mypaging.main.data.NetworkState
-import com.example.mypaging.main.data.Status
+import com.example.mypaging.utils.KotlinEpoxyHolder
 import timber.log.Timber
 
-class NetworkStateHolder(
-    view: View, private val retryCallback: () -> Unit
-): RecyclerView.ViewHolder(view) {
-    private val progressBar = view.findViewById<ProgressBar>(R.id.progress_bar)
-    private val retryButton = view.findViewById<Button>(R.id.retry_button)
-    private val errorMsg = view.findViewById<TextView>(R.id.error_msg)
+@EpoxyModelClass(layout = R.layout.network_state_item)
+abstract class NetworkStateHolder: EpoxyModelWithHolder<NetworkStateHolder.ViewHolder>() {
 
-    init {
-        retryButton.setOnClickListener { retryCallback() }
+    @EpoxyAttribute var networkState: NetworkState? = null
+
+    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    lateinit var onRetryClick: () -> Unit
+
+    override fun bind(holder: ViewHolder) {
+        Timber.d("NetworkStateHolder bind networkState = $networkState")
+        holder.progressBar.visibility = toVisibility(networkState?.status == NetworkState.Status.RUNNING)
+        holder.retryButton.visibility = toVisibility(networkState?.status == NetworkState.Status.FAILED)
+        holder.retryButton.setOnClickListener { onRetryClick() }
+        holder.errorMsg.visibility = toVisibility(networkState?.msg != null)
+        holder.errorMsg.text = networkState?.msg
     }
 
-    fun bind(networkState: NetworkState?) {
-        Timber.d("bind networkState = $networkState")
-        progressBar.visibility = toVisibility(networkState?.status == Status.RUNNING)
-        retryButton.visibility = toVisibility(networkState?.status == Status.FAILED)
-        errorMsg.visibility = toVisibility(networkState?.msg != null)
-        errorMsg.text = networkState?.msg
+    override fun unbind(holder: ViewHolder) {
+        super.unbind(holder)
+        holder.retryButton.setOnClickListener(null)
     }
 
     companion object {
@@ -37,5 +42,11 @@ class NetworkStateHolder(
                 View.GONE
             }
         }
+    }
+
+    class ViewHolder: KotlinEpoxyHolder() {
+        val errorMsg by bind<TextView>(R.id.error_msg)
+        val progressBar by bind<ProgressBar>(R.id.progress_bar)
+        val retryButton by bind<Button>(R.id.retry_button)
     }
 }

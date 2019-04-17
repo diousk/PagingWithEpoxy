@@ -10,7 +10,7 @@ class MainViewModel(
     private val repo: MainRepository
 ): AutoDisposeViewModel() {
     private val listing by lazy {
-        repo.postsOfArticle(5)
+        repo.postsOfArticle(15)
     }
 
     // public for observe

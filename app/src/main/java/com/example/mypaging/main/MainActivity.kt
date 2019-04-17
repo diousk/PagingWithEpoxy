@@ -23,16 +23,22 @@ class MainActivity : DaggerAppCompatActivity(), MainView {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
         binding.viewModel = viewModel
-        binding.rvPosts.layoutManager = LinearLayoutManager(this)
-        binding.rvPosts.adapter = ArticleAdapter { viewModel.retry() }
+
+        // setup list adapter/controller
+//        binding.rvPosts.layoutManager = LinearLayoutManager(this)
+//        binding.rvPosts.adapter = ArticleAdapter { viewModel.retry() }
+        val controller = ArticleController { viewModel.retry() }
+        binding.rvPosts.setController(controller)
         Timber.d("MainActivity onCreate")
         viewModel.articleLivedata.observe(this, Observer {
             Timber.d("observe list, size = ${it.size}")
-            (binding.rvPosts.adapter as ArticleAdapter).submitList(it)
+            controller.submitList(it)
+//            (binding.rvPosts.adapter as ArticleAdapter).submitList(it)
         })
         viewModel.networkState.observe(this, Observer {
             Timber.d("observe networkState, it = $it")
-            (binding.rvPosts.adapter as ArticleAdapter).setNetworkState(it)
+            controller.networkState = it
+//            (binding.rvPosts.adapter as ArticleAdapter).setNetworkState(it)
         })
         viewModel.refreshState.observe(this, Observer {
             Timber.d("observe refreshState, it = $it")
