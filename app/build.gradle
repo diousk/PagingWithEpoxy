@@ -50,7 +50,7 @@ ext.rxrelay_version = '2.1.0'
 ext.rxext_version = '0.20.8'
 ext.timber_version = '4.7.1'
 ext.socket_version = '1.0.0'
-ext.epoxy_version = '3.1.0'
+ext.epoxy_version = '3.4.1'
 ext.work_version = '2.0.0'
 ext.paging_version = "2.1.0"
 
