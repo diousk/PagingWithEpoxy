@@ -50,7 +50,6 @@ ext.rxrelay_version = '2.1.0'
 ext.rxext_version = '0.20.8'
 ext.timber_version = '4.7.1'
 ext.socket_version = '1.0.0'
-ext.epoxy_version = '3.4.1'
 ext.work_version = '2.0.0'
 ext.paging_version = "2.1.0"
 
@@ -94,12 +93,6 @@ dependencies {
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
     testImplementation "androidx.paging:paging-common-ktx:$paging_version"
-
-    // Epoxy - for RecyclerView
-    implementation "com.airbnb.android:epoxy:$epoxy_version"
-    implementation "com.airbnb.android:epoxy-databinding:$epoxy_version"
-    implementation "com.airbnb.android:epoxy-paging:$epoxy_version"
-    kapt "com.airbnb.android:epoxy-processor:$epoxy_version"
 
     // Rx
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
