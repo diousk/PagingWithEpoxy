@@ -20,7 +20,7 @@ class MainViewModel(
 
     fun fetchPosts() {
         Timber.d("fetchPosts")
-        retry()
+        refresh()
     }
 
     fun refresh() {
