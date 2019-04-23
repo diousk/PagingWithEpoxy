@@ -1,4 +1,4 @@
-package com.example.mypaging.main
+package com.example.mypaging.main.view
 
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute

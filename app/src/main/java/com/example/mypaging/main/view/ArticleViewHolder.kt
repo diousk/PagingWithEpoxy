@@ -1,4 +1,4 @@
-package com.example.mypaging.main
+package com.example.mypaging.main.view
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypaging.databinding.ItemFeedBinding

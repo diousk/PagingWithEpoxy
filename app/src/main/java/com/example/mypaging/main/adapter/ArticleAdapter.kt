@@ -1,4 +1,4 @@
-package com.example.mypaging.main
+package com.example.mypaging.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypaging.R
 import com.example.mypaging.databinding.ItemFeedBinding
+import com.example.mypaging.main.view.ArticleViewHolder
+import com.example.mypaging.main.view.NetworkStateViewHolder
 import com.example.mypaging.main.data.NetworkState
 import com.example.mypaging.model.Article
 import timber.log.Timber
@@ -25,7 +27,13 @@ class ArticleAdapter(
                 ArticleViewHolder(binding)
             }
             R.layout.network_state_item -> {
-                NetworkStateViewHolder(layoutInflater.inflate(R.layout.network_state_item, parent, false), retryCallback)
+                NetworkStateViewHolder(
+                    layoutInflater.inflate(
+                        R.layout.network_state_item,
+                        parent,
+                        false
+                    ), retryCallback
+                )
             }
             else -> throw IllegalArgumentException("unknown view type $viewType")
         }

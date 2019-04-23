@@ -1,10 +1,12 @@
-package com.example.mypaging.main
+package com.example.mypaging.main.adapter
 
 import android.os.Handler
 import android.os.Looper
 import com.airbnb.epoxy.EpoxyAsyncUtil
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
+import com.example.mypaging.main.ArticleHolder_
+import com.example.mypaging.main.NetworkStateHolder_
 import com.example.mypaging.main.data.NetworkState
 import com.example.mypaging.model.Article
 import timber.log.Timber

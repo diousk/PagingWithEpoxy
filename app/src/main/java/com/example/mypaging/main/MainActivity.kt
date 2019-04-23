@@ -5,9 +5,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mypaging.R
 import com.example.mypaging.databinding.ActivityMainBinding
+import com.example.mypaging.main.adapter.ArticleController
 import com.example.mypaging.main.data.NetworkState
 import dagger.android.support.DaggerAppCompatActivity
 import timber.log.Timber

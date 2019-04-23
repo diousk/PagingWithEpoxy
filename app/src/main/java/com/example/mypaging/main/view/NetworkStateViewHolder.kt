@@ -1,4 +1,4 @@
-package com.example.mypaging.main
+package com.example.mypaging.main.view
 
 import android.view.View
 import android.widget.Button
@@ -23,9 +23,12 @@ class NetworkStateViewHolder(
 
     fun bind(networkState: NetworkState?) {
         Timber.d("bind networkState = $networkState")
-        progressBar.visibility = toVisibility(networkState?.status == Status.RUNNING)
-        retryButton.visibility = toVisibility(networkState?.status == Status.FAILED)
-        errorMsg.visibility = toVisibility(networkState?.msg != null)
+        progressBar.visibility =
+            toVisibility(networkState?.status == Status.RUNNING)
+        retryButton.visibility =
+            toVisibility(networkState?.status == Status.FAILED)
+        errorMsg.visibility =
+            toVisibility(networkState?.msg != null)
         errorMsg.text = networkState?.msg
     }
 

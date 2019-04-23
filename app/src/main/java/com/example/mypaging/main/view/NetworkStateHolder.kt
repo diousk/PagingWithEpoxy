@@ -1,4 +1,4 @@
-package com.example.mypaging.main
+package com.example.mypaging.main.view
 
 import android.view.View
 import android.widget.Button
@@ -22,10 +22,13 @@ abstract class NetworkStateHolder: EpoxyModelWithHolder<NetworkStateHolder.ViewH
 
     override fun bind(holder: ViewHolder) {
         Timber.d("NetworkStateHolder bind networkState = $networkState")
-        holder.progressBar.visibility = toVisibility(networkState?.status == NetworkState.Status.RUNNING)
-        holder.retryButton.visibility = toVisibility(networkState?.status == NetworkState.Status.FAILED)
+        holder.progressBar.visibility =
+            toVisibility(networkState?.status == NetworkState.Status.RUNNING)
+        holder.retryButton.visibility =
+            toVisibility(networkState?.status == NetworkState.Status.FAILED)
         holder.retryButton.setOnClickListener { onRetryClick() }
-        holder.errorMsg.visibility = toVisibility(networkState?.msg != null)
+        holder.errorMsg.visibility =
+            toVisibility(networkState?.msg != null)
         holder.errorMsg.text = networkState?.msg
     }
 
